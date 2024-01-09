@@ -5,7 +5,7 @@ exports.findAll = (req, res) => {
     if (error) {
       return res.status(500).send({ error: error });
     }
-    conn.query("SELECT * FROM Vehicle", (error, result) => {
+    conn.query("SELECT * FROM vehicle", (error, result) => {
       conn.release();
 
       if (error) {
@@ -25,7 +25,7 @@ exports.findById = (req, res) => {
       return res.status(500).send({ error: error });
     }
     conn.query(
-      "SELECT * FROM Vehicle WHERE vehicle_id = ?",
+      "SELECT * FROM vehicle WHERE vehicle_id = ?",
       [vehicle_id],
       (error, result) => {
         conn.release();
@@ -51,7 +51,7 @@ exports.insert = (req, res) => {
       return res.status(500).send({ error: error });
     }
     conn.query(
-      "SELECT * FROM Vehicle WHERE vehicle_model = ?",
+      "SELECT * FROM vehicle WHERE vehicle_model = ?",
       [vehicle.vehicle_model],
       (error, result) => {
         if (error) {
@@ -60,7 +60,7 @@ exports.insert = (req, res) => {
         }
         if (result.length == 0) {
           conn.query(
-            "INSERT INTO Vehicle (vehicle_model, vehicle_total_volume, vehicle_connected, vehicle_software_updates) VALUES (?, ?, ?, ?)",
+            "INSERT INTO vehicle (vehicle_model, vehicle_total_volume, vehicle_connected, vehicle_software_updates) VALUES (?, ?, ?, ?)",
             [
               vehicle.vehicle_model,
               vehicle.vehicle_total_volume,
@@ -94,7 +94,7 @@ exports.update = (req, res) => {
       return res.status(500).send({ error: error });
     }
     conn.query(
-      "SELECT * FROM Vehicle WHERE vehicle_model = ?",
+      "SELECT * FROM vehicle WHERE vehicle_model = ?",
       [vehicle.vehicle_model],
       (error, result) => {
         if (error) {
@@ -103,7 +103,7 @@ exports.update = (req, res) => {
         }
         if (result.length == 0) {
           conn.query(
-            "UPDATE Vehicle SET ? WHERE vehicle_id = ?",
+            "UPDATE vehicle SET ? WHERE vehicle_id = ?",
             [req.body, vehicle_id],
             (error) => {
               conn.release();
@@ -118,7 +118,7 @@ exports.update = (req, res) => {
         } else if (result.length == 1) {
           if (result[0].vehicle_id == vehicle_id) {
             conn.query(
-              "UPDATE Vehicle SET ? WHERE vehicle_id = ?",
+              "UPDATE vehicle SET ? WHERE vehicle_id = ?",
               [req.body, vehicle_id],
               (error) => {
                 conn.release();
@@ -151,7 +151,7 @@ exports.delete = (req, res) => {
       return res.status(500).send({ error: error });
     }
     conn.query(
-      "SELECT * FROM Vehicle WHERE vehicle_id = ?",
+      "SELECT * FROM vehicle WHERE vehicle_id = ?",
       [vehicle_id],
       (error, result) => {
         if (error) {
@@ -159,7 +159,7 @@ exports.delete = (req, res) => {
           res.status(400).json(error);
         } else if (result.length == 1) {
           conn.query(
-            "DELETE FROM Vehicle WHERE vehicle_id = ?",
+            "DELETE FROM vehicle WHERE vehicle_id = ?",
             [vehicle_id],
             (error) => {
               conn.release();

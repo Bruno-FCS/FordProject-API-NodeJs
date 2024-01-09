@@ -9,7 +9,7 @@ exports.findAll = (req, res) => {
     if (error) {
       return res.status(500).send({ error: error });
     }
-    conn.query("SELECT * FROM User", (error, result) => {
+    conn.query("SELECT * FROM user", (error, result) => {
       conn.release();
 
       if (error) {
@@ -29,7 +29,7 @@ exports.findById = (req, res) => {
       return res.status(500).send({ error: error });
     }
     conn.query(
-      "SELECT * FROM User WHERE user_id = ?",
+      "SELECT * FROM user WHERE user_id = ?",
       [user_id],
       (error, result) => {
         conn.release();
@@ -57,7 +57,7 @@ exports.insert = (req, res) => {
       return res.status(500).send({ error: error });
     }
     conn.query(
-      "SELECT * FROM User WHERE user_name = ? OR user_email = ?",
+      "SELECT * FROM user WHERE user_name = ? OR user_email = ?",
       [userWithDate.user_name, userWithDate.user_email],
       (error, result) => {
         if (error) {
@@ -71,7 +71,7 @@ exports.insert = (req, res) => {
               return res.status(500).send({ error: error });
             }
             conn.query(
-              "INSERT INTO User (user_name, user_email, user_password, user_full_name, user_join_date) VALUES (?, ?, ?, ?, ?)",
+              "INSERT INTO user (user_name, user_email, user_password, user_full_name, user_join_date) VALUES (?, ?, ?, ?, ?)",
               [
                 userWithDate.user_name,
                 userWithDate.user_email,
@@ -107,7 +107,7 @@ exports.login = (req, res) => {
       return res.status(500).send({ error: error });
     }
     conn.query(
-      "SELECT * FROM User WHERE user_name = ?",
+      "SELECT * FROM user WHERE user_name = ?",
       [user_name],
       (error, result) => {
         conn.release();
@@ -167,7 +167,7 @@ exports.update = (req, res) => {
       return res.status(500).send({ error: error });
     }
     conn.query(
-      "SELECT * FROM User WHERE user_name = ? OR user_email = ?",
+      "SELECT * FROM user WHERE user_name = ? OR user_email = ?",
       [user.user_name, user.user_email],
       (error, result) => {
         if (error) {
@@ -176,7 +176,7 @@ exports.update = (req, res) => {
         }
         if (result.length == 0) {
           conn.query(
-            "UPDATE User SET ? WHERE user_id = ?",
+            "UPDATE user SET ? WHERE user_id = ?",
             [user, user_id],
             (error) => {
               conn.release();
@@ -211,7 +211,7 @@ exports.update = (req, res) => {
         } else if (result.length == 1) {
           if (result[0].user_id == user_id) {
             conn.query(
-              "UPDATE User SET ? WHERE user_id = ?",
+              "UPDATE user SET ? WHERE user_id = ?",
               [user, user_id],
               (error) => {
                 conn.release();
@@ -266,7 +266,7 @@ exports.changePassword = (req, res) => {
       return res.status(500).send({ error: error });
     }
     conn.query(
-      "SELECT * FROM User WHERE user_id = ?",
+      "SELECT * FROM user WHERE user_id = ?",
       [user_id],
       (error, result) => {
         if (error) {
@@ -287,7 +287,7 @@ exports.changePassword = (req, res) => {
                     return res.status(500).send({ error: error });
                   }
                   conn.query(
-                    "UPDATE User SET user_password = ? WHERE user_id = ?",
+                    "UPDATE user SET user_password = ? WHERE user_id = ?",
                     [hash, user_id],
                     (error) => {
                       conn.release();
@@ -323,7 +323,7 @@ exports.delete = (req, res) => {
       return res.status(500).send({ error: error });
     }
     conn.query(
-      "SELECT * FROM User WHERE user_id = ?",
+      "SELECT * FROM user WHERE user_id = ?",
       [user_id],
       (error, result) => {
         if (error) {
@@ -331,7 +331,7 @@ exports.delete = (req, res) => {
           res.status(400).json(error);
         } else if (result.length == 1) {
           conn.query(
-            "DELETE FROM User WHERE user_id = ?",
+            "DELETE FROM user WHERE user_id = ?",
             [user_id],
             (error) => {
               conn.release();
