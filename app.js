@@ -13,19 +13,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-// app.use((req, res, next) => {
-//   res.setHeader(
-//     "Access-Control-Allow-Origin",
-//     "https://desafio-final-frontend-nodejs.herokuapp.com"
-//   );
-//   res.setHeader(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept, x-access-token"
-//   );
-//   res.setHeader("Access-Control-Allow-Methods", "PUT, POST, DELETE, GET");
+app.use((req, res, next) => {
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://desafio-final-frontend-nodejs.herokuapp.com"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, x-access-token"
+  );
+  res.setHeader("Access-Control-Allow-Methods", "PUT, POST, DELETE, GET");
 
-//   next();
-// });
+  next();
+});
 
 app.use("/users", usersRoute);
 app.use("/vehicles", vehicleRoute);
