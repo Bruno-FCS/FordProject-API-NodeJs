@@ -16,7 +16,7 @@ app.use(cors());
 app.use((req, res, next) => {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "https://ford-project-front-end-node-js.vercel.app/"
+    "https://ford-project-front-end-node-js.vercel.app"
   );
   res.setHeader(
     "Access-Control-Allow-Headers",
